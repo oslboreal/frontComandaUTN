@@ -26,13 +26,13 @@ function obtenerMesas() {
         url: URL_SERVER + '/tables/list',
         headers
     }).done((resultados) => {
+        console.log("Obtener mesas:");
+        console.log(resultados);
         for (const t of resultados['tables']) {
             let new_table = new Table(t.id, t.status, t.identifier);
             tables.push(new_table);
         }
     });
-
-    console.log("Obteniendo mesas con token:" + headers);
 }
 
 function obtenerMenues() {
@@ -40,6 +40,8 @@ function obtenerMenues() {
         url: URL_SERVER + '/menu/all',
         headers
     }).done((resultados) => {
+        console.log("Obtener menues:");
+        console.log(resultados);
         for (const m of resultados['menus']) {
             let nuevoMenu = new Menu(m.id, m.type, m.name, m.amount);
             menus.push(nuevoMenu);
@@ -52,6 +54,8 @@ function obtenerOrdenes() {
         url: URL_SERVER + '/orders/all_activate',
         headers
     }).done((resultados) => {
+        console.log("Obtener ordenes:");
+        console.log(resultados);
         for (const o of resultados['orders']) {
             let nuevaOrden = new Order(o.id, o.user_id, o.order_type, o.status, o.finalized, o.estimated_time, o.name, o.amount);
             orders.push(nuevaOrden);
@@ -63,6 +67,8 @@ function obtenerComandas() {
     $.ajax({
         url: URL_SERVER + '/comanda/all_activate'
     }).done((resultados) => {
+        console.log("Obtener comandas:");
+        console.log(resultados);
         for (const c of resultados['comandas']) {
             let nuevaComanda = new Comanda(c.id, c.client_name, JSON.parse(c.orders), c.amount, c.opinion, c.identifier, c.table_id, c.date, c.photo, c.mozo_id, c.status);
             comandas.push(nuevaComanda);
@@ -74,15 +80,16 @@ function cargaInicial() {
     $('#table_tables').html('');
 
     obtenerMesas();
-    //obtenerMenues();
-    //obtenerOrdenes();
-    //obtenerComandas();
+    obtenerMenues();
+    obtenerOrdenes();
+    obtenerComandas();
 
     // Carga de las mesas.
-    //cargarMesas();
+    cargarMesas();
 }
 
 function cargarMesas() {
+    console.log("Index JS - Cargando mesas")
     // Vacio el modal.
     $('#modals').html('');
 
