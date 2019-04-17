@@ -8,6 +8,9 @@ var role = localStorage.getItem('role');
 var user_id = localStorage.getItem('user_id');
 var orders = [];
 
+// Elementos del DOM
+var $enlaceNombreUsuario = $("#enlace-nombre-usuario");
+
 $(document).ready(() => {
     obtenerOrdenes();
 });
@@ -17,6 +20,10 @@ function obtenerOrdenes() {
     $('#table_orders').html('');
     // Vaciamos el arreglo de ordenes.
     orders = [];
+
+    // Seteamos el nombre del usuario.
+    if (user_id != undefined && user_id != null)
+        $enlaceNombreUsuario.html(user_id);
 
     // Obtenemos las ordenes.
     $.ajax({
@@ -28,7 +35,8 @@ function obtenerOrdenes() {
             let new_order = new Order(o.id, o.user_id, o.order_type, o.status, o.finalized, o.estimated_time, o.name, o.amount);
             orders.push(new_order);
         }
-        cargarOrdenes();
+        console.log(orders);
+        //cargarOrdenes();
     });
 }
 

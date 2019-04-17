@@ -16,7 +16,9 @@ var menus = [];
 var orders = [];
 
 $(document).ready(() => {
-    cargaInicial();
+    console.log("Index JS - " + user_id + " -" + role);
+    console.log("Index JS - Token: " + token);
+   // cargaInicial();
 });
 
 function obtenerMesas() {
