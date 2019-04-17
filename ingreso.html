@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Comanda</title>
+    <title>Login Comanda - Juan Marcos Vallejo</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
+    
+    <!-- Estilo -->
     <style>
         body{
             background-color: black;
@@ -16,6 +18,7 @@
             width: 200px;
         }
     </style>
+
 </head>
 <body>
     <div class="login-container container">
@@ -26,12 +29,6 @@
            </div> 
         </div>
         
-        <div class="row justify-content-center text-center">
-            <figure>
-                <img src="./static/logo.jpg" alt="Comanda">
-            </figure>
-        </div>
-
         <div class="row justify-content-center text-center">
             <div class="login col-auto">
 
@@ -44,10 +41,14 @@
                 </div>
                 
                 <div class="form-group">
+                    <!-- Botón de ingreso -->
                     <button class="btn btn-sm btn-primary" id="btn_login" onclick="login()">Ingreso</button>
                 </div>
 
                 <div><small id="err_msg" style="color:red"></small></div>
+                <div id="alerta" class="alert alert-danger" role="alert" style="display: none;">
+                    Usuario o contraseña incorrectos!
+                  </div>
             </div>
         </div>
     </div>
@@ -68,52 +69,44 @@
             }
         });
 
+        // Método encargado de realizar e login y obtener la sesion.
         function login(){
             var $usuario = $("#user_name"); 
             var $pass = $("#password");
-            var valorUsuario = $usuario.val;
+            var valorUsuario = $usuario.val();
+            var valorPassword = $pass.val();
 
-            console_log(valorUsuario);
-
-            //user_name  = document.getElementById('user_name').value;
-            //pass = document.getElementById('password').value;
-
-            //validate_user(user_name, pass);
-
+            autenticarUsuario(valorUsuario, valorPassword);
         }
         
-        
-        function validate_user(user, password){
+        // Método encargado de realizar la consulta al endpoint y obtener los datos de sesion.
+        function autenticarUsuario(usuario, password){
             
-            data = {
-                user,
-                password
-            }
+            informacion = { usuario, password}
 
             $.ajax({
                 type: 'POST',
                 url : URL_SERVER + '/login',
-                data,
-                success: function(res){
-                    // data delete
+                data : informacion,
+                success: function(resultado){
+                    // Borramos la información almacenada anteriormente.
                     localStorage.clear();
                     
-                    // set data
-                    localStorage.setItem('token', res['token']);
-                    localStorage.setItem('user_id', res['user']['id']);
-                    localStorage.setItem('user_name', res['user']['user_name']);
-                    localStorage.setItem('role', res['user']['role']);
+                    // Seteamos la información.
+                    localStorage.setItem('token', resultado['token']);
+                    localStorage.setItem('user_id', resultado['user']['id']);
+                    localStorage.setItem('user_name', resultado['user']['user_name']);
+                    localStorage.setItem('role', resultado['user']['role']);
+
+                    // Redireccionamos al index.
                     window.location.href = './index.html';
                 },
                 error: function(err){
-                    $('#err_msg').html('Usuario o contraseña incorrectos.')
+                    var $boxAlerta = $("#alerta");
+                    $boxAlerta.show();
                 }
             });
-
         }
-        
     </script>
-    
-
-</body>
+    </body>
 </html>

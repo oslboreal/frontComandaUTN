@@ -20,13 +20,16 @@ var header = `<div>
             </li>
         </ul>` : `<ul class="navbar-nav mr-auto"></ul>`}
         <div class="form-inline align-right my-2 my-lg-0">
-            <button onclick="log_out()" class="btn btn-outline-danger my-2 my-sm-0">Logout</button>
+            <button onclick="Desconectarse()" class="btn btn-outline-danger my-2 my-sm-0">Salir</button>
         </div>
     </div>
 </nav>
 </div>`;
 $('#header').html(header);
-function log_out() {
+
+function Desconectarse() {
+    // Limpio la información almacenada en el local storage.
     localStorage.clear();
+    // Redirect al login.
     window.location.href = './login.html';
 }

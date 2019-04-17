@@ -17,7 +17,7 @@
 .login-container{
     margin-top: 150px;
     width: 400px;
-    border: solid burlywood;
+    border: solid rgb(5, 79, 97);
     border-radius: 5px;
     background-color: black;
 }

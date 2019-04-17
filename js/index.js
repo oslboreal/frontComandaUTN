@@ -3,21 +3,28 @@
 /// <reference path='./classes/Comanda.ts'/>
 /// <reference path='constants.js'/>
 /// <reference path='./classes/Menu.ts'/>
+
 var token = localStorage.getItem('token');
 var headers = { 'token': token };
 var role = localStorage.getItem('role');
 var user_id = localStorage.getItem('user_id');
+
+// Arreglos.
 var tables = [];
 var comandas = [];
 var menus = [];
 var orders = [];
+
 $(document).ready(() => {
-    get_data();
+    cargaInicial();
 });
-function get_data() {
+
+function cargaInicial() {
     $('#table_tables').html('');
+
     tables = [];
     comandas = [];
+
     $.ajax({
         url: URL_SERVER + '/tables/list',
         headers
@@ -55,6 +62,7 @@ function get_data() {
         });
     });
 }
+
 function all_tables() {
     $('#modals').html('');
     for (const t of tables) {
@@ -103,6 +111,7 @@ function all_tables() {
         }
     }
 }
+
 function update_status(id, status) {
     let data = { id, status };
     $.ajax({
