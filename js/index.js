@@ -70,7 +70,6 @@ function obtenerComandas()
     });
 }
 
-
 function cargaInicial() {
     $('#table_tables').html('');
 
@@ -84,7 +83,10 @@ function cargaInicial() {
 }
 
 function cargarMesas() {
+    // Vacio el modal.
     $('#modals').html('');
+
+    // Por cada mesa agrego un registro.
     for (const t of tables) {
         // Muestra todos los pedidos activos.
         if (t.status == ESTADO_PEDIDOS[3]) {
