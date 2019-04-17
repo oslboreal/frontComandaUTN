@@ -13,8 +13,12 @@ $(document).ready(() => {
 });
 
 function obtenerOrdenes() {
+    // Vaciamos la tabla de ordenes.
     $('#table_orders').html('');
+    // Vaciamos el arreglo de ordenes.
     orders = [];
+
+    // Obtenemos las ordenes.
     $.ajax({
         url: URL_SERVER + '/orders/all_by_type',
         headers,
@@ -28,6 +32,7 @@ function obtenerOrdenes() {
     });
 }
 
+// En vez de crear dinamicamente HTML usar JQUERY
 function cargarOrdenes() {
     $('#modals_employee').html('');
     let html = '';
@@ -100,13 +105,19 @@ function actualizarEmpleado() {
 }
 
 function iniciarOrden(order_id) {
+    // Obtengo el tiempo estimado que ingreso el empleado.
     let estimated_time = $('#input_' + order_id).val();
+
+    // Actualizo el estado de la orden a pendiente y le seteo el tiempo estimado.
     $.ajax({
         url: URL_SERVER + '/orders/update_status',
         type: 'POST',
         headers,
         data: { order_id, 'status': 'PENDIENTE', estimated_time }
-    }).done((res) => { actualizarEmpleado(); });
+    }).done((res) => {
+        // Actualizamos la vista del empleado
+        actualizarEmpleado();
+    });
 }
 
 function finalizarOrden(order_id) {
@@ -115,7 +126,10 @@ function finalizarOrden(order_id) {
         headers,
         data: { order_id },
         type: 'POST'
-    }).done((res) => { actualizarEmpleado(); });
+    }).done((res) => {
+        // Actualizamos la vista del empleado
+        actualizarEmpleado();
+    });
 }
 
 function actualizarEstadoOrden(order_id, status) {
@@ -124,5 +138,8 @@ function actualizarEstadoOrden(order_id, status) {
         type: 'POST',
         headers,
         data: { order_id, status }
-    }).done((res) => { actualizarEmpleado(); });
+    }).done((res) => {
+        // Actualziamos la vista del empleado
+        actualizarEmpleado();
+    });
 }

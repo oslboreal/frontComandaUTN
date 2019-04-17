@@ -9,18 +9,17 @@ var headers = { 'token': token };
 var role = localStorage.getItem('role');
 var user_id = localStorage.getItem('user_id');
 
-    // Arreglos.
-    var tables = [];
-    var comandas = [];
-    var menus = [];
-    var orders = [];
+// Arreglos.
+var tables = [];
+var comandas = [];
+var menus = [];
+var orders = [];
 
 $(document).ready(() => {
     cargaInicial();
 });
 
-function obtenerMesas()
-{
+function obtenerMesas() {
     $.ajax({
         url: URL_SERVER + '/tables/list',
         headers
@@ -32,8 +31,7 @@ function obtenerMesas()
     });
 }
 
-function obtenerMenues()
-{
+function obtenerMenues() {
     $.ajax({
         url: URL_SERVER + '/menu/all',
         headers
@@ -45,8 +43,7 @@ function obtenerMenues()
     });
 }
 
-function obtenerOrdenes()
-{
+function obtenerOrdenes() {
     $.ajax({
         url: URL_SERVER + '/orders/all_activate',
         headers
@@ -58,8 +55,7 @@ function obtenerOrdenes()
     });
 }
 
-function obtenerComandas()
-{
+function obtenerComandas() {
     $.ajax({
         url: URL_SERVER + '/comanda/all_activate'
     }).done((resultados) => {
@@ -163,6 +159,7 @@ function close_table(table_id) {
             break;
         }
     }
+
     $.ajax({
         url: URL_SERVER + '/tables/close_table',
         type: 'POST',
@@ -192,6 +189,7 @@ function create_modal(id) {
             break;
         }
     }
+
     if (!comanda) {
         return;
     }
@@ -225,7 +223,7 @@ function create_modal(id) {
                                         <th>Estado</th>
                                         <th>Importe</th>
                                     </thead>
-                                    <tbody id="load_orders_${id}">
+                                    <tbody id="cargarOrdenes_${id}">
                                         
                                     </tbody>
                                     <tbody id="table_orders_${id}">
@@ -247,7 +245,7 @@ function create_modal(id) {
                                         </td>
                                     </tbody>
                                 </table>
-                                <button onclick="new_order(${comanda.id}, ${id})" class="btn btn-sm btn-primary" id="btn_append_${id}" disabled>Agregar</button>
+                                <button onclick="nuevaOrden(${comanda.id}, ${id})" class="btn btn-sm btn-primary" id="btn_append_${id}" disabled>Agregar</button>
                             </div>
 
                         </div>
@@ -257,8 +255,10 @@ function create_modal(id) {
             </div>
     `;
     $('#modals').append(html);
-    load_orders(comanda.orders, id);
+    cargarOrdenes(comanda.orders, id);
 }
+
+// APPEND DE MENUES: PASAR A JQUERY.
 function load_menus(id, value) {
     let select = '<option selected>Elija..</option>';
     let amount = 0;
@@ -270,10 +270,14 @@ function load_menus(id, value) {
     $('#select_orders_' + id).html(select);
     $('#btn_append_' + id).attr('disabled', 'disabled');
 }
+
+// BOTON DE AGREGAR. HACER EN JQERY.
 function enable_append(id) {
     $('#btn_append_' + id).removeAttr('disabled');
 }
-function new_order(comanda_id, id) {
+
+function nuevaOrden(comanda_id, id) {
+    // Obtengo id del menu.
     let menu_id = $('#select_orders_' + id).val();
     $.ajax({
         url: URL_SERVER + '/orders/new',
@@ -284,7 +288,9 @@ function new_order(comanda_id, id) {
         reload();
     });
 }
-function load_orders(data, id) {
+
+// Append de ordenes disponibles, hacer con JQUERY.
+function cargarOrdenes(data, id) {
     let html = '';
     for (const o of data) {
         let order_id = parseInt(o);
@@ -303,5 +309,6 @@ function load_orders(data, id) {
             }
         }
     }
-    $('#load_orders_' + id).html(html);
+
+    $('#cargarOrdenes_' + id).html(html);
 }
