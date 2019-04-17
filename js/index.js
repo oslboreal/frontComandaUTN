@@ -18,7 +18,7 @@ var orders = [];
 $(document).ready(() => {
     console.log("Index JS - " + user_id + " -" + role);
     console.log("Index JS - Token: " + token);
-   // cargaInicial();
+    cargaInicial();
 });
 
 function obtenerMesas() {
@@ -31,6 +31,8 @@ function obtenerMesas() {
             tables.push(new_table);
         }
     });
+
+    console.log("Obteniendo mesas con token:" + headers);
 }
 
 function obtenerMenues() {
@@ -72,12 +74,12 @@ function cargaInicial() {
     $('#table_tables').html('');
 
     obtenerMesas();
-    obtenerMenues();
-    obtenerOrdenes();
-    obtenerComandas();
+    //obtenerMenues();
+    //obtenerOrdenes();
+    //obtenerComandas();
 
     // Carga de las mesas.
-    cargarMesas();
+    //cargarMesas();
 }
 
 function cargarMesas() {
