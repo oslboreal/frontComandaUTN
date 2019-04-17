@@ -74,20 +74,20 @@
             var $pass = $("#password");
             var valorUsuario = $usuario.val();
             var valorPassword = $pass.val();
-
+            console.log(valorUsuario);
+            console.log(valorPassword);
             autenticarUsuario(valorUsuario, valorPassword);
         }
 
         // Método encargado de realizar la consulta al endpoint y obtener los datos de sesion.
-        function autenticarUsuario(usuario, password) {
-
-            informacion = { usuario, password }
+        function autenticarUsuario(user, password) {
 
             $.ajax({
                 type: 'POST',
                 url: URL_SERVER + '/login',
-                data: informacion,
+                data: { user, password },
                 success: function (resultado) {
+
                     // Borramos la información almacenada anteriormente.
                     localStorage.clear();
 
