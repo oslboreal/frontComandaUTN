@@ -1,6 +1,7 @@
 "use strict";
 var role = localStorage.getItem('role');
 var user_name = localStorage.getItem('user_name');
+
 var header = `<div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">${user_name}</a>

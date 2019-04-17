@@ -9,63 +9,84 @@ var headers = { 'token': token };
 var role = localStorage.getItem('role');
 var user_id = localStorage.getItem('user_id');
 
-// Arreglos.
-var tables = [];
-var comandas = [];
-var menus = [];
-var orders = [];
+    // Arreglos.
+    var tables = [];
+    var comandas = [];
+    var menus = [];
+    var orders = [];
 
 $(document).ready(() => {
     cargaInicial();
 });
 
-function cargaInicial() {
-    $('#table_tables').html('');
-
-    tables = [];
-    comandas = [];
-
+function obtenerMesas()
+{
     $.ajax({
         url: URL_SERVER + '/tables/list',
         headers
-    }).done((res) => {
-        for (const t of res['tables']) {
+    }).done((resultados) => {
+        for (const t of resultados['tables']) {
             let new_table = new Table(t.id, t.status, t.identifier);
             tables.push(new_table);
         }
-        $.ajax({
-            url: URL_SERVER + '/menu/all',
-            headers
-        }).done((res) => {
-            for (const m of res['menus']) {
-                let new_menu = new Menu(m.id, m.type, m.name, m.amount);
-                menus.push(new_menu);
-            }
-            $.ajax({
-                url: URL_SERVER + '/orders/all_activate',
-                headers
-            }).done((res) => {
-                for (const o of res['orders']) {
-                    let new_order = new Order(o.id, o.user_id, o.order_type, o.status, o.finalized, o.estimated_time, o.name, o.amount);
-                    orders.push(new_order);
-                }
-                $.ajax({
-                    url: URL_SERVER + '/comanda/all_activate'
-                }).done((res) => {
-                    for (const c of res['comandas']) {
-                        let new_comanda = new Comanda(c.id, c.client_name, JSON.parse(c.orders), c.amount, c.opinion, c.identifier, c.table_id, c.date, c.photo, c.mozo_id, c.status);
-                        comandas.push(new_comanda);
-                    }
-                    all_tables();
-                });
-            });
-        });
     });
 }
 
-function all_tables() {
+function obtenerMenues()
+{
+    $.ajax({
+        url: URL_SERVER + '/menu/all',
+        headers
+    }).done((resultados) => {
+        for (const m of resultados['menus']) {
+            let nuevoMenu = new Menu(m.id, m.type, m.name, m.amount);
+            menus.push(nuevoMenu);
+        }
+    });
+}
+
+function obtenerOrdenes()
+{
+    $.ajax({
+        url: URL_SERVER + '/orders/all_activate',
+        headers
+    }).done((resultados) => {
+        for (const o of resultados['orders']) {
+            let nuevaOrden = new Order(o.id, o.user_id, o.order_type, o.status, o.finalized, o.estimated_time, o.name, o.amount);
+            orders.push(nuevaOrden);
+        }
+    });
+}
+
+function obtenerComandas()
+{
+    $.ajax({
+        url: URL_SERVER + '/comanda/all_activate'
+    }).done((resultados) => {
+        for (const c of resultados['comandas']) {
+            let nuevaComanda = new Comanda(c.id, c.client_name, JSON.parse(c.orders), c.amount, c.opinion, c.identifier, c.table_id, c.date, c.photo, c.mozo_id, c.status);
+            comandas.push(nuevaComanda);
+        }
+    });
+}
+
+
+function cargaInicial() {
+    $('#table_tables').html('');
+
+    obtenerMesas();
+    obtenerMenues();
+    obtenerOrdenes();
+    obtenerComandas();
+
+    // Carga de las mesas.
+    cargarMesas();
+}
+
+function cargarMesas() {
     $('#modals').html('');
     for (const t of tables) {
+        // Muestra todos los pedidos activos.
         if (t.status == ESTADO_PEDIDOS[3]) {
             let html = `
                         <tr>

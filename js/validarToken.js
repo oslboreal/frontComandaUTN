@@ -1,13 +1,9 @@
-
-
 user_validate();
 
-function user_validate(){
+function user_validate() {
+    let data = { 'token': localStorage.getItem('token') };
 
-    let data = { 'token' : localStorage.getItem('token') };
-    
     $.ajax({
-
         url: URL_SERVER + '/login/check_token',
         type: 'post',
         data,
@@ -17,7 +13,5 @@ function user_validate(){
         error: (err) => {
             window.location.href = '/login.html'
         }
-
     });
-
 }

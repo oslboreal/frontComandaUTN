@@ -1,14 +1,17 @@
 "use strict";
 /// <reference path='./classes/Order.ts'/>
 /// <reference path='constants.js'/>
+
 var token = localStorage.getItem('token');
 var headers = { 'token': token };
 var role = localStorage.getItem('role');
 var user_id = localStorage.getItem('user_id');
 var orders = [];
+
 $(document).ready(() => {
     get_data_orders();
 });
+
 function get_data_orders() {
     $('#table_orders').html('');
     orders = [];
@@ -21,10 +24,11 @@ function get_data_orders() {
             let new_order = new Order(o.id, o.user_id, o.order_type, o.status, o.finalized, o.estimated_time, o.name, o.amount);
             orders.push(new_order);
         }
-        all_orders();
+        cargarOrdenes();
     });
 }
-function all_orders() {
+
+function cargarOrdenes() {
     $('#modals_employee').html('');
     let html = '';
     if (orders.length > 0) {
@@ -38,7 +42,7 @@ function all_orders() {
                 <td>${o.status == 'PENDIENTE' ? `<button data-backdrop="static" data-toggle="modal" data-target="#modal_employee_${o.id}" class="btn btn-sm btn-success">Comenzar pedido</button>` : `${o.status != 'LISTO PARA SERVIR' ? `<button onclick="update_status_order(${o.id}, 'LISTO PARA SERVIR')" class="btn btn-sm btn-warning">Listo</button>` : `<button onclick="update_status_order(${o.id}, 'EN PREPARACION')" class="btn btn-sm btn-primary">Trabajando</button>`}<button data-backdrop="static" data-toggle="modal" data-target="#modal_employee_${o.id}" class="btn btn-sm btn-danger">Finalizar pedido</button>`}</td>
                 </tr>
             `;
-            create_modal_employees(o.id, o.status == 'PENDIENTE');
+            crearModalEmpleados(o.id, o.status == 'PENDIENTE');
         }
     }
     else {
@@ -46,7 +50,9 @@ function all_orders() {
     }
     $('#table_orders').html(html);
 }
-function create_modal_employees(id, start) {
+
+// TODO: Reemplazar esto. (Debería usar JQuery y buscar un elemento existente).
+function crearModalEmpleados(id, start) {
     let html = `
                 <div  id="modal_employee_${id}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_employee_${id}" aria-hidden="true">
                 <div class="modal-dialog-centered modal-dialog modal-sm">
@@ -78,6 +84,7 @@ function create_modal_employees(id, start) {
     }
     $('#modals_employee').append(html);
 }
+
 function enabled_start(id) {
     let estimated_time = parseInt($('#input_' + id).val());
     if (estimated_time > 0) {
@@ -87,9 +94,11 @@ function enabled_start(id) {
         $('#btn_ok_' + id).attr('disabled', 'disabled');
     }
 }
+
 function reload_employee() {
     window.location.reload();
 }
+
 function start_order(order_id) {
     let estimated_time = $('#input_' + order_id).val();
     $.ajax({
@@ -99,6 +108,7 @@ function start_order(order_id) {
         data: { order_id, 'status': 'PENDIENTE', estimated_time }
     }).done((res) => { reload_employee(); });
 }
+
 function end_order(order_id) {
     $.ajax({
         url: URL_SERVER + '/orders/close',
@@ -107,6 +117,7 @@ function end_order(order_id) {
         type: 'POST'
     }).done((res) => { reload_employee(); });
 }
+
 function update_status_order(order_id, status) {
     $.ajax({
         url: URL_SERVER + '/orders/update_status',
