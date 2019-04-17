@@ -1,5 +1,5 @@
 /// <reference path='./classes/Order.ts'/>
-/// <reference path='constants.js'/>
+/// <reference path='constantes.js'/>
 
 var token = localStorage.getItem('token');
 var headers = { 'token': token };

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/styles.css">
     <style>
         body{
-            background-color: grey;
+            background-color: black;
         }
         img{
             width: 200px;
@@ -22,7 +22,7 @@
 
         <div class="row justify-content-center text-center">
            <div class="titulo col-auto">
-               <h1>La Comanda</h1>
+               <h1>Restaurant</h1>
            </div> 
         </div>
         
@@ -44,19 +44,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <button class="btn btn-sm btn-success" id="btn_login" onclick="login()">Ingresar</button>
+                    <button class="btn btn-sm btn-primary" id="btn_login" onclick="login()">Ingreso</button>
                 </div>
 
                 <div><small id="err_msg" style="color:red"></small></div>
-
             </div>
-    
-    
-    
         </div>
-
     </div>
-
 
     <script src="./js/constants.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -65,20 +59,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
     <script>
 
-        var button_login = document.getElementById('btn_login');
-        button_login.addEventListener("keyup", function(event){
-            event.preventDefault();
-            if(event.keyCode === 13){
-                button_login.click();
+        var $btn_login = $("#btn_login");
+        $btn_login.on("keypress", function(e)
+        {
+            e.preventDefault();
+            if(e.keyCode === 13){
+                $btn_login.click();
             }
         });
 
         function login(){
+            var $usuario = $("#user_name"); 
+            var $pass = $("#password");
+            var valorUsuario = $usuario.val;
 
-            user_name  = document.getElementById('user_name').value;
-            pass = document.getElementById('password').value;
+            console_log(valorUsuario);
 
-            validate_user(user_name, pass);
+            //user_name  = document.getElementById('user_name').value;
+            //pass = document.getElementById('password').value;
+
+            //validate_user(user_name, pass);
 
         }
         
