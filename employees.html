@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
+        integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <header id="header" class="mb-2">    
+        </header>
+        <section class="my-2 row">
+
+            <div class="col-12">
+                <h2> Pedidos </h2>
+
+            </div>
+
+            <div class="col-12">
+                <table class='table'>
+                    <thead>
+                        <th>Menú</th>
+                        <th>Estado</th>
+                        <th>Responsable</th>
+                        <th>Tiempo de preparación</th>
+                        <th>Acción</th>
+                    </thead>
+                    <tbody id="table_orders">
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    <!-- Modal -->
+    <div id="modals_employee">
+    </div>
+
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
+        integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+        crossorigin="anonymous"></script>
+    <script src="./js/constants.js"></script>
+    <script src="./js//classes/Order.js"></script>
+    <script src="./js//employees.js"></script>
+    <script src="./js/headers.js"></script>
+    <script src="./js//validate.js"></script>
+    <script>
+        var exports = {}
+        var role = localStorage.getItem('role');
+        $('#title_type').html(role);
+    </script>
+</body>
+
+</html>
