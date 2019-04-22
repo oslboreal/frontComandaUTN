@@ -10,38 +10,10 @@
         integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
 </head>
 
-
-
 <body>
-    <div class="container-fluid">
-        <header id="" class="mb-2">
-            <div>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <!-- Nombre del usuario conectado actualmente -->
-                    <a class="navbar-brand js-nombre-usuario" href="#">Nombre de usuario</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+    <div class="container">
+        <header id="header" class="mb-2"></header>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul id="nav_list" class="navbar-nav mr-auto" style="display: none">
-                            <!-- Opciones del indice - Se mostraran solo para los socios -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="./index.html">Mesas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./empleados.html">Pedidos</a>
-                            </li>
-                        </ul>
-                        <div class="form-inline align-right my-2 my-lg-2">
-                            <button onclick="Desconectarse()"
-                                class="btn btn-outline-danger my-2 my-sm-0">Desconectarse</button>
-                        </div>
-                    </div>
-                </nav>
-            </div>
         </header>
         <div class="row">
             <div class="col">
@@ -51,11 +23,11 @@
         <div class="row justify-content-center text-center my-2">
             <!-- Primer fecha -->
             <div class="col">
-                <input class="form-control" type="date" name="" id="">
+                <input class="form-control" type="date" name="" id="fechaDesde">
             </div>
             <!-- Segunda fecha -->
             <div class="col">
-                <input class="form-control" type="date" name="" id="">
+                <input class="form-control" type="date" name="" id="fechaHasta">
             </div>
             <div class="col">
                 <!-- Primer select -->
@@ -65,20 +37,22 @@
                     <option value="PEDIDOS">Pedidos</option>
                     <option value="MESAS">Mesas</option>
                 </select>
-                
+
             </div>
             <div class="col">
                 <!-- Segundo select -- Vacío, una vez seleccionado el primer select se actualzia. -->
-                <select class="custom-select custom-select-sm" name="" id="operation"> </select>
+                <select class="custom-select custom-select-sm" name="" id="selectOperacion"> </select>
             </div>
-            <div class="col"><button class="btn btn-sm btn-success">Buscar</button></div>
+            <div class="col"><button id="btnFiltrar" class="btn btn-sm btn-success">Buscar</button></div>
         </div>
         <div class="row">
         </div>
-    </div>
+        <!-- Contenido principal -->
+        <div class="alert alert-dark" role="alert" id="contenido">
+            This is a dark alert—check it out!
+        </div>
 
-    </div>
-    <script>
+        <script>
         // var exports = {}
 
         // function load_operations(value) {
@@ -119,29 +93,33 @@
         // function buscar() {
         // }
 
-    </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
-        integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous">
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
+            integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous">
+            </script>
+
+        <script>
+            // Namespace definition.
+            window.Comanda = {};
         </script>
 
-    <script>
-        // Namespace definition.
-        window.Comanda = {};
-    </script>
-    
-    <!-- Script Cabecera -->
-    <script src="./js/cabecera.js"></script>
-    <!-- Script estadísticas -->
-    <script src="js/estadisticas.js"></script>
-    <!-- Script de validación de la sesión -->
-    <script src="js/validarToken.js"></script>
-    <!-- Script de validación de la sesión -->
-    <script src="js/configuracion.js"></script>
+        <!-- Script Cabecera -->
+        <script src="./js/cabecera.js"></script>
+        <!-- Script estadísticas -->
+        <script src="js/estadisticas.js"></script>
+        <!-- Script de validación de la sesión -->
+        <script src="js/validarToken.js"></script>
+        <!-- Script de validación de la sesión -->
+        <script src="js/configuracion.js"></script>
+        <script src="js/validarToken.js"></script>
+        <!-- Script de cabecera -->
+        <script src="js/cabecera.js"></script>
+    </div>
 </body>
 
 </html>
