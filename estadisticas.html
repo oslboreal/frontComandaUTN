@@ -5,17 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Comanda</title>
+    <title>Estadisticas - Comanda JMV</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
         integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
 </head>
+
+
 
 <body>
     <div class="container-fluid">
         <header id="" class="mb-2">
             <div>
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="#">Nombre de usuario</a>
+                    <!-- Nombre del usuario conectado actualmente -->
+                    <a class="navbar-brand js-nombre-usuario" href="#">Nombre de usuario</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -46,23 +49,27 @@
             </div>
         </div>
         <div class="row justify-content-center text-center my-2">
+            <!-- Primer fecha -->
+            <div class="col">
+                <input class="form-control" type="date" name="" id="">
+            </div>
+            <!-- Segunda fecha -->
             <div class="col">
                 <input class="form-control" type="date" name="" id="">
             </div>
             <div class="col">
-                <input class="form-control" type="date" name="" id="">
-            </div>
-            <div class="col">
-                <select onchange="load_operations(this.value)" class="custom-select custom-select-sm" name="" id="">
+                <!-- Primer select -->
+                <select class="custom-select custom-select-sm" name="" id="selectTipo">
                     <option disabled selected value="">Elija...</option>
                     <option value="EMPLEADOS">Empleados</option>
                     <option value="PEDIDOS">Pedidos</option>
                     <option value="MESAS">Mesas</option>
                 </select>
+                
             </div>
             <div class="col">
-                <select class="custom-select custom-select-sm" name="" id="operation">
-                </select>
+                <!-- Segundo select -- Vacío, una vez seleccionado el primer select se actualzia. -->
+                <select class="custom-select custom-select-sm" name="" id="operation"> </select>
             </div>
             <div class="col"><button class="btn btn-sm btn-success">Buscar</button></div>
         </div>
@@ -70,46 +77,47 @@
         </div>
     </div>
 
+    </div>
     <script>
-        var exports = {}
+        // var exports = {}
 
-        function load_operations(value) {
-            console.log(value);
-            let opers = [];
-            let html = ``;
+        // function load_operations(value) {
+        //     console.log(value);
+        //     let opers = [];
+        //     let html = ``;
 
-            if (value == 'EMPLEADOS') {
-                html += `
-                <option value="/users/log_login">Dias y horarios de logueo</option>
-                <option>Operaciones de todos por sector</option>
-                <option>Operaciones de todos por sector p/e</option>
-                <option>Cantidad de operaciones</option>
-            `;
-            }
-            else if (value == 'PEDIDOS') {
-                html += `
-            <option>Mas vendido</option>
-            <option>Menos vendido</option>
-            <option>Tiempo demorado</option>
-            <option>Cancelados</option>
-            `; load_operations
-            }
-            else if (value == 'MESAS') {
-                html += `
-            <option>Mas usada</option>
-            <option>Menos usada</option>
-            <option>Mayor facturacion</option>
-            <option>Menor facturacion</option>
-            <option>Factura mayor importe</option>
-            <option>Factura menor importe</option>
-            `;
-            }
+        //     if (value == 'EMPLEADOS') {
+        //         html += `
+        //         <option value="/users/log_login">Dias y horarios de logueo</option>
+        //         <option>Operaciones de todos por sector</option>
+        //         <option>Operaciones de todos por sector p/e</option>
+        //         <option>Cantidad de operaciones</option>
+        //     `;
+        //     }
+        //     else if (value == 'PEDIDOS') {
+        //         html += `
+        //     <option>Mas vendido</option>
+        //     <option>Menos vendido</option>
+        //     <option>Tiempo demorado</option>
+        //     <option>Cancelados</option>
+        //     `; 
+        //     }
+        //     else if (value == 'MESAS') {
+        //         html += `
+        //     <option>Mesa Mas usada</option>
+        //     <option>Mesa Menos usada</option>
+        //     <option>Mesa Mayor facturacion</option>
+        //     <option>Mesa Menor facturacion</option>
+        //     <option>Factura mayor importe</option>
+        //     <option>Factura menor importe</option>
+        //     `;
+        //     }
 
-            $('#operation').html(html);
-        }
+        //     $('#operation').html(html);
+        // }
 
-        function buscar() {
-        }
+        // function buscar() {
+        // }
 
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -120,7 +128,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
         integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous">
         </script>
+
+    <script>
+        // Namespace definition.
+        window.Comanda = {};
+    </script>
+    
+    <!-- Script Cabecera -->
     <script src="./js/cabecera.js"></script>
+    <!-- Script estadísticas -->
+    <script src="js/estadisticas.js"></script>
+    <!-- Script de validación de la sesión -->
+    <script src="js/validarToken.js"></script>
+    <!-- Script de validación de la sesión -->
+    <script src="js/configuracion.js"></script>
 </body>
 
 </html>

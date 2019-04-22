@@ -32,5 +32,5 @@ function Desconectarse() {
     // Limpio la información almacenada en el local storage.
     localStorage.clear();
     // Redirect al login.
-    window.location.href = './login.html';
+    window.location.href = './ingreso.html';
 }

@@ -20,13 +20,15 @@
                 return res.role;
             },
             error: (err) => {
-                window.location.href = '/login.html'
+                window.location.href = 'ingreso.html'
+                console.log("Su sesión es inválida, vuelva a autenticarse.");
+                sessionStorage.clear();
             }
         });
     }
 
-}(window.Comanda.Usuarios = window.Comanda.Usuarios || {}, jQuery));
+}(window.Comanda.ValidarToken = window.Comanda.ValidarToken || {}, jQuery));
 
 jQuery(function () {
-    window.Comanda.Usuarios.Inicializar();
+    window.Comanda.ValidarToken.Inicializar();
 });
