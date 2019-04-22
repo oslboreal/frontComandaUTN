@@ -18,6 +18,20 @@
         traerComponentes();
     }
 
+    self.obtenerMenues = function () {
+        $.ajax({
+            url: URL_SERVER + '/menu/all',
+            headers
+        }).done((resultados) => {
+            console.log("Obtener menues:");
+            console.log(resultados);
+            for (const m of resultados['menus']) {
+                let nuevoMenu = new Menu(m.id, m.type, m.name, m.amount);
+                menus.push(nuevoMenu);
+            }
+        });
+    }
+
 }(window.Comanda.Menues = window.Comanda.Menues || {}, jQuery));
 
 jQuery(function () {
