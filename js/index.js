@@ -1,7 +1,7 @@
 "use strict";
 /// <reference path='./classes/Table.ts'/>
 /// <reference path='./classes/Comanda.ts'/>
-/// <reference path='constants.js'/>
+/// <reference path='configuracion.js'/>
 /// <reference path='./classes/Menu.ts'/>
 
 var token = localStorage.getItem('token');

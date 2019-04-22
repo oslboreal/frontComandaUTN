@@ -1,6 +1,6 @@
 "use strict";
 /// <reference path='./classes/Order.ts'/>
-/// <reference path='constants.js'/>
+/// <reference path='configuracion.js'/>
 
 var token = localStorage.getItem('token');
 var headers = { 'token': token };
