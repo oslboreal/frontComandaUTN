@@ -1,9 +1,4 @@
-"use strict";
-/// <reference path='./classes/Table.ts'/>
-/// <reference path='./classes/Comanda.ts'/>
-/// <reference path='configuracion.js'/>
-/// <reference path='./classes/Menu.ts'/>
-
+// Local storage.
 var token = localStorage.getItem('token');
 var headers = { 'token': token };
 var role = localStorage.getItem('role');
@@ -16,86 +11,64 @@ var menus = [];
 var orders = [];
 
 $(document).ready(() => {
-    console.log("Index JS - " + user_id + " -" + role);
-    console.log("Index JS - Token: " + token);
     cargaInicial();
 });
-
-function obtenerMesas() {
-    $.ajax({
-        url: URL_SERVER + '/tables/list',
-        headers
-    }).done((resultados) => {
-        console.log("Obtener mesas:");
-        console.log(resultados);
-        for (const t of resultados['tables']) {
-            let new_table = new Table(t.id, t.status, t.identifier);
-            tables.push(new_table);
-        }
-    });
-}
-
-function obtenerMenues() {
-    $.ajax({
-        url: URL_SERVER + '/menu/all',
-        headers
-    }).done((resultados) => {
-        console.log("Obtener menues:");
-        console.log(resultados);
-        for (const m of resultados['menus']) {
-            let nuevoMenu = new Menu(m.id, m.type, m.name, m.amount);
-            menus.push(nuevoMenu);
-        }
-    });
-}
-
-function obtenerOrdenes() {
-    $.ajax({
-        url: URL_SERVER + '/orders/all_activate',
-        headers
-    }).done((resultados) => {
-        console.log("Obtener ordenes:");
-        console.log(resultados);
-        for (const o of resultados['orders']) {
-            let nuevaOrden = new Order(o.id, o.user_id, o.order_type, o.status, o.finalized, o.estimated_time, o.name, o.amount);
-            orders.push(nuevaOrden);
-        }
-    });
-}
-
-function obtenerComandas() {
-    $.ajax({
-        url: URL_SERVER + '/comanda/all_activate'
-    }).done((resultados) => {
-        console.log("Obtener comandas:");
-        console.log(resultados);
-        for (const c of resultados['comandas']) {
-            let nuevaComanda = new Comanda(c.id, c.client_name, JSON.parse(c.orders), c.amount, c.opinion, c.identifier, c.table_id, c.date, c.photo, c.mozo_id, c.status);
-            comandas.push(nuevaComanda);
-        }
-    });
-}
 
 function cargaInicial() {
     $('#table_tables').html('');
 
-    obtenerMesas();
-    obtenerMenues();
-    obtenerOrdenes();
-    obtenerComandas();
+    traerComandas();
+    traerMenues();  
+    traerOrdenes();
+    traerMesas();
+}
 
-    // Carga de las mesas.
-    cargarMesas();
+function traerMenues() {
+    $.ajax({
+        url: URL_SERVER + '/menu/all',
+        headers
+    }).done((res) => {
+        menus = res['menus'];
+    });
+}
+
+function traerOrdenes() {
+    $.ajax({
+        url: URL_SERVER + '/orders/all_activate',
+        headers
+    }).done((res) => {
+        orders = res['orders'];
+    });
+}
+
+function traerComandas() {
+    $.ajax({
+        url: URL_SERVER + '/comanda/all_activate'
+    }).done((res) => {
+        comandas = res['comandas'];
+    });
+}
+
+function traerMesas() {
+    $.ajax({
+        type: 'GET',
+        url: URL_SERVER + '/tables/list',
+        headers
+    }).done((res) => {
+        tables = res['tables'];
+        cargarMesas();
+    });
 }
 
 function cargarMesas() {
-    console.log("Index JS - Cargando mesas")
-    // Vacio el modal.
     $('#modals').html('');
 
-    // Por cada mesa agrego un registro.
+    for (let i = 0; i < tables.length; i++) {
+        //console.log(tables[i]);
+    }
+
     for (const t of tables) {
-        // Muestra todos los pedidos activos.
+        // Mesas cerradas.
         if (t.status == ESTADO_PEDIDOS[3]) {
             let html = `
                         <tr>
@@ -106,7 +79,7 @@ function cargarMesas() {
                         </tr>
                     `;
             $('#table_tables').append(html);
-        }
+        } // Otros estados.
         else {
             create_modal(t.id);
             var comanda = null;
@@ -122,9 +95,9 @@ function cargarMesas() {
                         <td>${t.identifier}</td>
                         <td>
                             <select ${comanda.mozo_id == user_id || role == 'SOCIO' ? '' : 'disabled'} class="custom-select custom-select-sm" onchange='update_status(${t.id}, this.value)'>
-                                <option id='opt_0_${t.id}' value='${ESTADO_PEDIDOS[0]}' >Cliente esperando pedido</option>
-                                <option id='opt_1_${t.id}' value='${ESTADO_PEDIDOS[1]}'>Cliente comiendo</option>
-                                <option id='opt_2_${t.id}' value='${ESTADO_PEDIDOS[2]}'>Cliente pagando</option>
+                                <option id='opt_0_${t.id}' value='CLIENTE ESPERANDO' >Cliente esperando pedido</option>
+                                <option id='opt_1_${t.id}' value='CLIENTE COMIENDO'>Cliente comiendo</option>
+                                <option id='opt_2_${t.id}' value='CLIENTE PAGANDO'>Cliente pagando</option>
                             </select>
                         </td>
                         <td><button class="btn btn-link" data-toggle="modal" data-target="#orderModal_${t.id}"
@@ -141,15 +114,13 @@ function cargarMesas() {
         }
     }
 }
-
 function update_status(id, status) {
-    let data = { id, status };
     $.ajax({
         url: URL_SERVER + '/tables/update',
         type: 'POST',
-        data,
+        data : { id, status },
         headers
-    }).done((res) => { get_data(); });
+    }).done((res) => { cargaInicial(); });
 }
 function open_table(table_id) {
     let data = { id: table_id };
@@ -170,7 +141,6 @@ function close_table(table_id) {
             break;
         }
     }
-
     $.ajax({
         url: URL_SERVER + '/tables/close_table',
         type: 'POST',
@@ -180,7 +150,7 @@ function close_table(table_id) {
 }
 function update_name(input_id, comanda_id) {
     var client_name = $('#inp_' + input_id).val();
-    console.log(client_name);
+   // console.log(client_name);
     $.ajax({
         url: URL_SERVER + '/comanda/update_client_name',
         data: { comanda_id, client_name },
@@ -193,19 +163,17 @@ function reload() {
 }
 function create_modal(id) {
     var comanda = null;
-    console.log(comandas);
+   // console.log(comandas);
     for (const c of comandas) {
         if (c.table_id == id) {
             comanda = c;
             break;
         }
     }
-
     if (!comanda) {
         return;
     }
     let html = `
-    
             <div class="modal fade" id="orderModal_${id}" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel_${id}"
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -219,9 +187,7 @@ function create_modal(id) {
                     <div class="container row">
                         <div class="col-12 row my-2">
                             <span id="mod_date_${id}" class="col-12">${comanda.date}</span>
-
                             <span class="col-8">Nombre del cliente: <input ${comanda.mozo_id == user_id || role == 'SOCIO' ? '' : 'disabled'} type="text" id="inp_${id}" value="${comanda.client_name ? comanda.client_name : ''}"> <i class="fas fa-save" onclick="update_name(${id}, ${comanda.id})"></i></span>
-
                             <span class="col-12">Mozo id: ${comanda.mozo_id}</span>
                         </div>
                         <div class="col-12 my-2">
@@ -234,7 +200,7 @@ function create_modal(id) {
                                         <th>Estado</th>
                                         <th>Importe</th>
                                     </thead>
-                                    <tbody id="cargarOrdenes_${id}">
+                                    <tbody id="load_orders_${id}">
                                         
                                     </tbody>
                                     <tbody id="table_orders_${id}">
@@ -256,20 +222,16 @@ function create_modal(id) {
                                         </td>
                                     </tbody>
                                 </table>
-                                <button onclick="nuevaOrden(${comanda.id}, ${id})" class="btn btn-sm btn-primary" id="btn_append_${id}" disabled>Agregar</button>
+                                <button onclick="new_order(${comanda.id}, ${id})" class="btn btn-sm btn-primary" id="btn_append_${id}" disabled>Agregar</button>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
     `;
     $('#modals').append(html);
-    cargarOrdenes(comanda.orders, id);
+    load_orders(comanda.orders, id);
 }
-
-// APPEND DE MENUES: PASAR A JQUERY.
 function load_menus(id, value) {
     let select = '<option selected>Elija..</option>';
     let amount = 0;
@@ -281,14 +243,10 @@ function load_menus(id, value) {
     $('#select_orders_' + id).html(select);
     $('#btn_append_' + id).attr('disabled', 'disabled');
 }
-
-// BOTON DE AGREGAR. HACER EN JQERY.
 function enable_append(id) {
     $('#btn_append_' + id).removeAttr('disabled');
 }
-
-function nuevaOrden(comanda_id, id) {
-    // Obtengo id del menu.
+function new_order(comanda_id, id) {
     let menu_id = $('#select_orders_' + id).val();
     $.ajax({
         url: URL_SERVER + '/orders/new',
@@ -299,13 +257,11 @@ function nuevaOrden(comanda_id, id) {
         reload();
     });
 }
-
-// Append de ordenes disponibles, hacer con JQUERY.
-function cargarOrdenes(data, id) {
+function load_orders(data, id) {
     let html = '';
     for (const o of data) {
         let order_id = parseInt(o);
-        console.log(o);
+        
         for (const ord of orders) {
             if (order_id === ord.id) {
                 html += `
@@ -320,6 +276,5 @@ function cargarOrdenes(data, id) {
             }
         }
     }
-
-    $('#cargarOrdenes_' + id).html(html);
+    $('#load_orders_' + id).html(html);
 }

@@ -11,7 +11,7 @@
     // Métodos privados.
     function user_validate() {
         let data = { 'token': localStorage.getItem('token') };
-    
+
         $.ajax({
             url: URL_SERVER + '/login/check_token',
             type: 'post',

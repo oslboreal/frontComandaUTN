@@ -1,10 +1,12 @@
-"use strict";
+// Cabecera - La comanda Juan Marcos Vallejo.
+// -- 22/04/19 --
+
 var role = localStorage.getItem('role');
 var user_name = localStorage.getItem('user_name');
 
 var header = `<div>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">${user_name}</a>
+<nav class="navbar  navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#"><h1>Bienvenido ${user_name}</h1></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -17,12 +19,15 @@ var header = `<div>
                 <a class="nav-link" href="./index.html">Mesas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./employees.html">Pedidos</a>
+                <a class="nav-link" href="./empleados.html">Pedidos</a>
             </li>
-        </ul>` : `<ul class="navbar-nav mr-auto"></ul>`}
-        <div class="form-inline align-right my-2 my-lg-0">
-            <button onclick="Desconectarse()" class="btn btn-outline-danger my-2 my-sm-0">Salir</button>
-        </div>
+            <li class="nav-item">
+            <a class="nav-link" onclick="Desconectarse()" href="./empleados.html">Desconectarse</a>
+             </li>
+        </ul>` : `<ul class="navbar-nav mr-auto"><li class="nav-item">
+        <a class="nav-link" onclick="Desconectarse()" href="./empleados.html">Desconectarse</a>
+         </li></ul>`}
+        
     </div>
 </nav>
 </div>`;

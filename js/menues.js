@@ -19,6 +19,8 @@
     }
 
     self.obtenerMenues = function () {
+        let menus = [];
+
         $.ajax({
             url: URL_SERVER + '/menu/all',
             headers
@@ -29,6 +31,8 @@
                 let nuevoMenu = new Menu(m.id, m.type, m.name, m.amount);
                 menus.push(nuevoMenu);
             }
+
+            return menus;
         });
     }
 

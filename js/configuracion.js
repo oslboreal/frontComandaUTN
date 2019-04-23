@@ -1,4 +1,4 @@
-const URL_SERVER = 'http://localhost/public';
+const URL_SERVER = 'http://localhost/back/public';
 
 const ESTADO_PEDIDOS = ['CLIENTE ESPERANDO', 'CLIENTE COMIENDO', 'CLIENTE PAGANDO', 'CERRADA'];
 
