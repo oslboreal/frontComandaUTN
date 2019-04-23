@@ -6,43 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Indice - Juan Marcos Vallejo</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
-        integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
 </head>
 
-<body>
-    <div class="container">
+<body style="background-color:black">
+    <div class="container" style="background-color: white">
         <!-- Header -->
-        <header id="" class="mb-2">
-            <div>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <a id="enlace-nombre-usuario" class="navbar-brand" href="#"></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul id="nav_list" class="navbar-nav mr-auto" style="display: none">
-                            <!-- Opciones del indice - Se mostraran solo para los socios -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="./index.html">Mesas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./empleados.html">Pedidos</a>
-                            </li>
-                        </ul>
-                        <div class="form-inline align-right my-2 my-lg-2">
-                            <button onclick="Desconectarse()"
-                                class="btn btn-outline-danger my-2 my-sm-0">Desconectarse</button>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </header>
+        <header id="header" class="mb-2"></header>
         <!-- Body -->
         <section class="my-2" style="padding-top:45px;">
             <div>
@@ -63,26 +36,31 @@
         </section>
     </div>
 
-    <script>var exports = {}</script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    <script>
+        window.Comanda = {};
+        var exports = {};
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
-        integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
         crossorigin="anonymous"></script>
 
     <!-- Modal -->
     <div id="modals">
     </div>
+
+    <!-- Script administracion de mesas -->
+    <script src="./js/mesas.js"></script>
+    <!-- Script validación de token -->
+    <script src="./js/validarToken.js"></script>
+    <!-- Script de configuracion -->
     <script src="./js/configuracion.js"></script>
-    <script src="./js/classes/Table.js"></script>
-    <script src="./js/classes/Comanda.js"></script>
-    <script src="./js//classes/Menu.js"></script>
-    <script src="./js//classes/Order.js"></script>
-    <script src="./js/index.js"></script>
+    <!-- Script de generacion de header -->
     <script src="./js/cabecera.js"></script>
+    <!-- Script de la pagina actual -->
+    <script src="./js/index.js"></script>
 </body>
 
 </html>

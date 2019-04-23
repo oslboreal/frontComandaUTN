@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Comanda - Juan Marcos Vallejo</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
-        integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA"
+        crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
 
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <!-- Botón de ingreso -->
-                    <button class="btn btn-sm btn-primary" id="btn_login" onclick="login()">Ingreso</button>
+                    <button class="btn btn-sm btn-primary" id="btn_login" onclick="Comanda.Logins.login()">Ingreso</button>
                 </div>
                 <div id="alerta" class="alert alert-danger" role="alert" style="display: none;">
                     Usuario o contraseña incorrectos!
@@ -47,67 +47,22 @@
         </div>
     </div>
 
-    <script src="./js/configuracion.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
-        integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+        crossorigin="anonymous"></script>
+
     <script>
-
-        // TODO: Llevar al script logins.js.
-        var $btn_login = $("#btn_login");
-        $btn_login.on("keypress", function (e) {
-            e.preventDefault();
-            if (e.keyCode === 13)
-                login();
-        });
-
-        // TODO: Llevar al script logins.js
-        // Método encargado de realizar e login y obtener la sesion.
-        function login() {
-            var $usuario = $("#user_name");
-            var $pass = $("#password");
-            var valorUsuario = $usuario.val();
-            var valorPassword = $pass.val();
-            console.log(valorUsuario);
-            console.log(valorPassword);
-            autenticarUsuario(valorUsuario, valorPassword);
-        }
-
-        // TODO: Llevar a el script logins.js
-        // Método encargado de realizar la consulta al endpoint y obtener los datos de sesion.
-        function autenticarUsuario(user, password) {
-
-            $.ajax({
-                type: 'POST',
-                url: URL_SERVER + '/login',
-                data: { user, password },
-                success: function (resultado) {
-
-                    // Borramos la información almacenada anteriormente.
-                    localStorage.clear();
-
-                    // Seteamos la información.
-                    localStorage.setItem('token', resultado['token']);
-                    localStorage.setItem('user_id', resultado['user']['id']);
-                    localStorage.setItem('user_name', resultado['user']['user_name']);
-                    localStorage.setItem('role', resultado['user']['role']);
-
-                    // Redireccionamos al index.
-                    window.location.href = './index.html';
-                },
-                error: function (err) {
-                    // En caso de alerta mostramos el mensaje de error.
-                    var $boxAlerta = $("#alerta");
-                    $boxAlerta.show();
-                }
-            });
-        }
+        // Inicializamos el namespace.
+        window.Comanda = {};
     </script>
+
+    <!-- Script de configuración de la aplicacion -->
+    <script src="./js/configuracion.js"></script>
+    <!-- Script de administración de logins -->
+    <script src="./js/logins.js"></script>
 </body>
 
 </html>
